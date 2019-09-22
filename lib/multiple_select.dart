@@ -15,7 +15,8 @@ class MultipleSelect {
     return Navigator.push(
       context,
       MultipleSelectRoute<List>(
-        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         elements: elements,
         values: values,
         title: title,
@@ -51,12 +52,14 @@ class MultipleSelectRoute<T> extends PopupRoute<T> {
   @override
   AnimationController createAnimationController() {
     assert(_animationController == null);
-    _animationController = BottomSheet.createAnimationController(navigator.overlay);
+    _animationController =
+        BottomSheet.createAnimationController(navigator.overlay);
     return _animationController;
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     Widget bottomSheet = new MediaQuery.removePadding(
       removeTop: true,
       context: context,
@@ -125,58 +128,68 @@ class SelectorListState extends State<SelectorList> {
               Divider(),
               Expanded(
                 child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) => Divider(height: 1.0, color: Colors.black54),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(height: 1.0, color: Colors.black54),
                   itemCount: this._elements.length,
                   itemBuilder: (context, index) {
                     MultipleSelectItem item = this._elements[index];
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 6,
-                            child: Text(
-                              item.content.toString(),
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.normal,
-                                decoration: TextDecoration.none,
+                    return GestureDetector(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 6,
+                              child: Text(
+                                item.content.toString(),
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.normal,
+                                  decoration: TextDecoration.none,
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: GestureDetector(
-                              child: this.widget.values.contains(item.value)
-                                  ? Icon(
-                                      Icons.check,
-                                      color: Colors.green,
-                                      size: 27,
-                                    )
-                                  : Icon(
-                                      Icons.add,
-                                      color: Colors.grey,
-                                      size: 27,
-                                    ),
-                              onTap: () {
-                                this.widget.values.contains(item.value) ? this.widget.values.remove(item.value) : this.widget.values.add(item.value);
-                                this.setState(() {});
-                              },
-                            ),
-                          )
-                        ],
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                child: this.widget.values.contains(item.value)
+                                    ? Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                        size: 27,
+                                      )
+                                    : Icon(
+                                        Icons.add,
+                                        color: Colors.grey,
+                                        size: 27,
+                                      ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
+                      onTap: () {
+                        this.widget.values.contains(item.value)
+                            ? this.widget.values.remove(item.value)
+                            : this.widget.values.add(item.value);
+                        this.setState(() {});
+                      },
                     );
                   },
                 ),
               ),
             ],
           ),
-          decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)), boxShadow: [
-            BoxShadow(color: Colors.black54, blurRadius: 5.0),
-          ]),
+          decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              boxShadow: [
+                BoxShadow(color: Colors.black54, blurRadius: 5.0),
+              ]),
           padding: EdgeInsets.only(top: 20, bottom: 5, left: 6, right: 6),
           margin: EdgeInsets.only(top: this.widget.height, bottom: 38.5),
         ),
@@ -193,7 +206,7 @@ class SelectorListState extends State<SelectorList> {
                   onPressed: () {
                     Navigator.pop(context, this.widget.values);
                   },
-                  child: Icon(Icons.close),
+                  child: Text("Done"),
                 ),
               ],
             ),
